@@ -10,7 +10,25 @@ def CheckForBattle():
         return False
     else:
         return True
+
+def checkSlot():
+    slot2 = auto.locateOnScreen("img/slot2.png", confidence= 0.7, grayscale=True)
+    if (slot2):
+        return True
+    else:
+        return False
+
+def PassRound():
+    passbutton = auto.locateOnScreen("img/pass.png", confidence= 0.9, grayscale=True)
+
+    if (passbutton):
+        button = auto.center(passbutton)
+        auto.click(button)
+        sleep(0.2)
+        auto.click(button)
+        print("passing")
         
+
 def SelectSpell():
     spell = auto.locateOnScreen("img/unenchanted.png", confidence= 0.7, grayscale=True)
 
@@ -142,7 +160,12 @@ def main():
         battle = CheckForBattle()
         if (battle):
             print("battle started")
-            SelectEnchant()
+            slot2 = checkSlot()
+            if slot2:
+                SelectEnchant()
+            else:
+                PassRound()
+                
         else:
             ("print wandering")
             Wander()
